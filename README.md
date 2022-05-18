@@ -1,3 +1,15 @@
+# Some comments on original code
+
+Eventually the Label3D needs a negation in the yaw. In case such yaw negation is **not introduced** the labels are not matching the point cloud, which is especially well seen when yaw is ~45/135 degrees:<br>
+![Label3D_yaw](./Label3D_yaw_problem.png)
+<br>
+This would also need to remove the negation in the output bounding boxes in inference_utils.py:
+<pre>
+either
+bb_yaw = np.arcsin(np.clip(ang[value], -1, 1)) + real_anchors[i][4]
+or
+bb_yaw = np.arcsin(np.clip(ang[value], -1, 1)) - real_anchors[i][4]
+</pre>
 # About Point Pillars
 Point Pillars is a very famous Deep Neural Network for 3D Object Detection for LiDAR point clouds. With the application of object detection on the LiDAR devices fitted in the self driving cars, Point Pillars focuse on fast inference ~50fps, which was magnitudes above as compared to other networks for 3D Object detection. In this repo, we are trying to develop point pillars in TensorFlow. [Here's](https://medium.com/@a_tyagi/pointpillars-3d-point-clouds-bounding-box-detection-and-tracking-pointnet-pointnet-lasernet-67e26116de5a?source=friends_link&sk=4a27f55f2cea645af39f72117984fd22) a good first post to familiarize yourself with Point Pillars. 
 

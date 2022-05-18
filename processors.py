@@ -36,6 +36,7 @@ class DataProcessor(Parameters):
             label.centroid = label.centroid @ np.linalg.inv(R).T - t
             label.dimension = label.dimension[[2, 1, 0]]
             label.yaw -= np.pi / 2
+            label.yaw *= -1
             while label.yaw < -np.pi:
                 label.yaw += (np.pi * 2)
             while label.yaw > np.pi:
